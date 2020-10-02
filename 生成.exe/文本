@@ -1,4 +1,4 @@
-1. 安装pyinstaller：  pip install pyinstaller
+1. 安装pyinstaller：  pip install pyinstaller        //     pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple pyinstaller  (更换国内pip源)
 
 2. 升级或者更新： pip install --upgrade pyinstaller
 
