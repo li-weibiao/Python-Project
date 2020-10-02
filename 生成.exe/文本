@@ -1,0 +1,18 @@
+1. 安装pyinstaller：  pip install pyinstaller
+
+2. 升级或者更新： pip install --upgrade pyinstaller
+
+3. 检查是否安装成功： pyinstaller --version
+
+4. 生成.exe文件： pyinstaller -F E:\tmp\studentsystem\studentsystem.py
+
+说明：在上面的代码中，参数 -F 表示只生成一个扩展名为.exe可执行文件。另外，
+pyinstaller模块打包程序时，不能把项目中应用的图片，文本文件，音频，视频等资源
+打包到可执行文件中。因此，在打包后还需要把这些资源复制到与可执行文件相同的
+目录中。
+
+生成的.exe可执行文件，要到对应的目录里去寻找，在屏幕上有提示。
+
+pyinstaller模块支持多操作系统，如windows, linux, Mac等，但是该模块并不支持
+跨平台，比如windows打包的.exe可执行文件，就只能在windows环境下运行。
+
