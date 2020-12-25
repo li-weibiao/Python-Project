@@ -1,0 +1,61 @@
+浅拷贝和深拷贝：
+1. 在 index.js里添加深拷贝方法
+
+2. 在 index.js里设置关闭弹出框的表单
+
+3. 在index.html里的取消按钮旁，设置 @click='closeDialogForm()' 方法
+
+4. 在index.html里 弹出框的学生明细表单里，<el-dialog>里添加@close="closeDialogForm()"
+
+========================================================================
+三种状态加载同一个表单
+1.在 index.js里添加修改学生明细的代码（注意，学号不能修改）
+
+2.把第一步的方法绑定到，index.html里的操作下面的，<el-button type="primary" ...>里
+
+3.在 index.js里添加 dialogTitle的变量
+
+4.然后把第四步的变量放到 index.html 里， title="学生明细" 改为 :title="dialogTitle"
+
+5.在 index.js里的添加学生时打开表单里，添加 弹出表单
+
+6. 在 index.js里的 查看学生的明细里 添加修改标题的代码
+
+7.同样的在修改学生的明细那里，添加修改标题的代码
+
+8. 在 index.js 里添加两个变量，isView:false, isEdit:false,
+
+9. 在 index.js 里 ,修改学生的明细里，添加修改isEdit变量
+
+10.在 index.js 里，在查看学生的明细那里，添加修改 isView的变量
+
+11. 在 index.js 里，关闭弹出框的表单里，添加初始化 isView和isEdit值
+
+12.在 index.html 里的学生明细表单里，加入 :disabled="isEdit||isView", :disabled="isView"
+
+13.在 index.html 里，确定的一行，加入v-show="!isView"，隐藏查看时的确定按钮
+
+======================================================================
+表单提交前的验证：
+1.来到 Element官网，找到 Form表单，表单验证，点击显示代码
+
+2.在index.js 里，data里，写rules:{}代码
+
+3.在 index.html里，弹出框的学生明细表单里，添加 :rules="rules"
+
+4.在3的基础上，在学号那里，添加 prop="sno"
+
+5.在 index.html里，弹出框的学生明细表单里，把第一个 v-model="studentForm"，改为 :model="studentForm"
+
+6.在 index.js 里，添加 rules:{} 的正则表达式，匹配95开头的表达式
+
+7.在 index.js里，然后继续在rules里添加匹配规则
+
+8.在index.html 里，弹出框的学生明细表单里，补全 prop=""的格式，包括姓名，邮箱，地址等等。
+
+================================================================================
+校验学号是否存在后端代码的实现：
+1.在后端 views.py 里定义 is_exsits_sno(request)函数
+
+2.在后端 urls.py里，添加sno/check的路径
+
