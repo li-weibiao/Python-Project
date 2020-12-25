@@ -1,0 +1,47 @@
+完成学号是否存在的校验：
+1. 修改 index.js 的代码，将 data:{}，改为 data(){}
+
+2. 在 data(){}容器里，编写校验学号是否存在的代码
+
+3. 在rules:{}，的 sno 里添加, {validator:rulesSNo, triggler: 'blur'},
+
+=================================================================
+表单的校验和重置：
+1.在 Element官网上找到 Form表单
+
+2.选择表单验证，然后点击显示代码
+
+3. submitForm(formName){}的代码
+
+4. 将复制的代码放到 index.js 里的 methods 方法里，改为 submitStudentForm
+
+5. 在 index.html 里, 的弹出框的学生明细表单里，添加 ref 标签
+
+6. 然后在 index.html 里的确定按钮那里绑定 index.js 里的 submitStudentForm 方法
+
+7. 接着在确定按钮旁的 submitStudentForm()方法里添加 'studentForm'这个表单
+
+8.在 index.js 里，关闭弹出框的表单里，编写 重置表单的校验 的代码，从 Element官网上，Form表单那里，复制而来的
+
+9.在 index.html 里继续完善确定和取消 两个按钮，将'studentForm'传递进去
+
+10. 在 index.html 里 弹出框的学生明细表单里，在@close="closeDialogForm()' 里添加 'studentForm'
+
+=============================================================================
+实现添加学生的后端接口：
+1.在后端 views.py 里添加 add_student(request) 函数
+
+2.在后端 urls.py 里添加'student/add/'的路径
+
+===============================================================================
+完成学生添加的功能：
+1.在 index.js 里 编写 校验成功后，执行添加或者修改的代码(其实是先把，下面2,3步的框架写出来，再完善的这段代码)
+
+2. 在 index.js 里 编写添加到数据库的函数 的代码
+
+3. 编写修改到更新到数据库 的代码
+
+4.在 index.html 里 的出生日期里添加 value-format="yyyy-MM-dd"
+
+5.再把 index.js 里的 birthday 里的 type:'date'，类型给去掉
+
