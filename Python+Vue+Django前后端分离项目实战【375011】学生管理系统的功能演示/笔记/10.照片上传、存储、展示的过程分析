@@ -1,0 +1,70 @@
+照片上传、存储、展示的过程分析
+1.如何存储照片
+a. 把照片序列化成文本，把文本存储在数据库（相对较小的图片）
+b.把照片存储在后端文件夹中，把路径存储在数据库中（比较通用）
+
+2.如何保证上传照片不重名
+a.以当前的日期时间 + 随机数命名
+b.使用python中 uuid 模块生成不相同的名字
+
+========================================================
+完成上传照片后端接口
+步骤：
+1.设置media文件夹
+
+2.Settings 中设定 media
+MEDIA_ROOT = os.path.join(BASE_DIR,'media/')
+MEDIA_URL = '/media/'
+
+3. 设置URL
+from django.conf import settings
+from django.conf.urls.static import static
+#添加这行
+urlpatterns += static(settings.MEDIA_URL,
+document_root=settings.MEDIA_ROOT)
+
+4. 完成接口函数代码
+
+5.在后端设置上传文件的目录和外部访问的路径，文件夹 media
+
+6.在后端 urls.py 里设置 第3步的代码
+
+7. 在后端 views.py 里编写 upload 函数
+
+8. 在后端 views.py 里 导入 uuid 类，导入 哈希库
+
+9.在 views.py 里定义 get_random_str 函数
+
+======================================================
+实现照片的上传和展示：
+1.在 index.js 里的 studentForm里 定义 imageUrl:'',
+
+2.删除掉之前定义的 imageUrl
+
+3.修改 index.html 里的 弹出框的学生明细表单 里的 <img v-if=...> 改为 v-if="studentForm.image"
+
+4. 在第三步的基础上，将 :src 也改为 :src="studentForm.imageUrl"
+
+5.在 index.html 里的 弹出框的学生明细表单里， 在 el-upload 里 添加 :http-request="uploadPicturePost"
+
+6.在 index.js 里定义 uploadPicturePost()
+
+=================================================================
+实现照片存储在数据库：
+1. 在 index.js 里 获取所有学生信息那里 添加 console.log(that.students)
+
+2. 在 index.js 里 编写根据Id 获取image 的编码
+
+3.在 index.js 里 编写查看学生的明细的代码， 添加获取照片，以及获取照片URL的代码
+
+4.在 index.js 里 关闭弹出框的表单里，编写 this.studentForm.image = "";  以及this.studentForm.imageUrl = "";
+
+5.在 index.html 里 弹出框的学生明细表单里 <el-upload... 里 添加 :disabled="isView"
+
+6.在后端 views.py 里 添加 image=data['image']
+
+7.完善 index.js 里 的修改学生的明细 里的，获取照片，获取照片URL的代码
+
+8.在后端 views.py 里 的update_student 方法里添加 obj_student.image = data['image']
+
+
