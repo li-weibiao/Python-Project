@@ -1,0 +1,77 @@
+增删改查的总体概述：
+1. 在Element官网组件上找到 Icon图标，复制新图标el-icon-more，到 index.html的表格图标里
+
+==========================================================================
+使用Element UI实现弹出框表单
+1. 在Element官网组件上找到 Dialog 对话框， 选择基本用法
+
+2. 在 index.html 里 分页下面，编写弹出框的代码
+
+3. 将第一步里的 基本用法 里的 :visible.sync="dialogVisible" 给复制下来，到弹出框的代码里
+
+4. 在index.js 里设置弹出框表单的变量，dialogVisible
+
+5. 设置弹出框的表单，在Element官网组件上找到 Form 表单
+
+6.  选择典型表单，点击显示代码， 复制 活动名称整段段代码，从<el-form ...>到</el-form-item>
+
+7. 修改复制过来的数据，将label改为学号
+
+8.  再复制一段修改后的代码，加在代码的后面
+
+9. 在Element官网组件上找到 Dialog 对话框里，复制下拉框到 index.html 里的对应位置，然后将绑定的数据 v-model="form.region" 给删掉
+
+10. 编写出生日期代码，在Element官网组件上找到 DatePicker 日期选择器
+
+11. 复制代码，改为手机号码，与邮箱地址，家庭住址
+
+12. 回到Element官网上的 Dialog 对话框， 复制两个按钮代码，放到表单的外面，将复制代码里的捆绑的东西给删掉
+
+13. 在index.js 里，添加学生时打开表单 的代码
+
+14. 在 index.html 里 的添加按钮那里绑定 13步 写的代码，格式为@click="addStudent()"
+
+15. 在 index.js 里的弹出框表单的值改为false
+
+=====================================================================================
+优化Element UI弹出框表单
+1. 在Element官网组件上找到 Form表单， 下拉，一直找到表格参数，找到label-position, label-width
+
+2. 在 index.html 里找到弹出框，优化第一步所找的两个参数
+
+3.  在2的基础上添加 margin-left
+
+4. 在请选择性别的后面添加 style="width: 185px;"
+
+5. 在Element官网组件上找到 input输入框 ， 下拉， 找到后缀属性，suffix-icon
+
+6. 将属性suffix-icon添加到弹出框表单里的 学号下面，并在Element官网组件上找到 Icon图标，选择合适的图标填入
+
+7. 将姓名，手机号码，邮箱地址，家庭住址，都采用第6步的方法，顺便将请选择性别，后面的指定宽度给删掉
+
+8. 调节选择日期的代码，设置宽度为93%
+
+9. 调节家庭住址的代码，设置宽度为263%
+
+10. 在Element官网组件上找到 Dialog 对话框里，找到 close-on-click-modal属性
+
+11. 将close-on-click-modal添加到<el-dialog>里，并且捆绑一个值，让它等于false
+
+======================================================================================
+使用弹出框表单展示学生明细
+1. 在 index.js 里定义查看学生的明细的代码，viewStudent(){｝
+
+2. 在 index.html 里捆绑查看学生明细的事件， @click="viewStudent()"
+
+3. 在 index.js 里设置studentForm:{}
+
+4. 再把 studentForm绑定到 index.html里的弹出框的明细表单里，v-model="studentForm"
+
+5. 然后便是绑定每一个字段，比如v-model="studentForm.sno"
+
+6. 在 index.html 表格操作下面添加<template>模版（ps:主要都是大概操作步骤，具体参考代码）
+
+7. 在第6步里，通过scope.row来传递参数
+
+8. 在 index.js里丰富查看学生明细的代码，填入row选项
+
