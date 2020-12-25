@@ -1,0 +1,62 @@
+完成学生修改的功能：
+1. 在后端 views.py 里定义 update_student 函数。
+
+2. 在 urls.py 里添加  'student/update/' 的路径
+
+3. 在前端 index.js 里编写 修改更新到数据库的代码
+
+4. 完善 index.js 里的校验学号是否存在的代码，达到修改数据时，不会报学号已存在的问题
+
+========================================================================
+完成学生删除的功能：
+1.在后端 views.py 里添加 delete_student 的代码
+
+2.在urls.py 里 添加 path('student/delete/')  路径
+
+3. 在前端 index.js 里编写 删除一条学生记录 的代码
+
+4. 然后把删除的事件，也就是第3步，捆绑到 index.html 删除的按钮上
+
+5.在Element 官网上找到 MessageBox 弹框，找到确认消息，点击显示代码，然后复制代码
+
+6.将复制的代码，黏贴到 index.js 里，删除一条学生记录那里面
+
+7.继续 在 index.js 里完善 删除一条学生记录的代码，补充确认删除响应事件，调用后端接口
+
+===========================================================================
+完成学生批量删除的功能：
+1.在 index.html 里 的分页那里， 将:span="8" 下面的 type类型 改为 "danger"
+
+2.在后端 views.py 里定义 delete_students函数
+
+3.在Element 官网上找到 Table表格  ，找到多选
+
+4. 复制  @selection-change="handleSelectionChange" 到 index.html 里的 表格里
+
+5. 在 index.js 里 编写 选择复选框时触发的操作 的代码
+
+6. 在 index.js 里定义 selectStudents:[], //选择复选框
+
+7.在 index.js 里定义 deleteStudents(){}
+
+8.在 index.html 里的 批量删除那里 绑定 @click="deleteStudents()" 事件
+
+9. 在后端 urls.py 里添加 'students/delete/'  路径
+
+==============================================================================
+使用Element 完成表单中照片展示
+1.在Element 官网上找到 Upload上传 ，选择用户头像上传，点击显示代码，复制代码
+
+2.复制代码到 index.html 里的 弹出框的学生明细表单里
+
+3. 在 index.js 里定义 imageUrl
+
+4.在Element 官网上找到 Upload上传 ，在用户头像上传那里，复制显示代码里的css样式
+
+5.然后将复制过来的 css样式，复制到 index.css 里
+
+6. 在刚复制过来的 index.css 里的代码，补充上 .el-dialog, 让它符合弹出框的学生明细表单的要求
+
+7.在 index.html 里补充 上传头像框 居中的代码
+
+
