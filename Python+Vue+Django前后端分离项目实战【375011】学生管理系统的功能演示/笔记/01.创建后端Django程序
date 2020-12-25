@@ -1,0 +1,52 @@
+1.Vue.js + Element + Django + Axios 前后端分离项目实战
+1.1 创建后端Django程序
+(1).在w7的虚拟机里打开pycharm,新建项目——>create new project
+
+(2).选择Django，确定好location的位置，可以自由确定，这里是：D:\pycharm\pycharm\BackProject\StudentV4BE
+
+(3).点击下方Create按钮
+
+(4).创建app模块(创建项目)：python manage.py startapp student
+敲下命令时报了一个错，name 'os' is not defined ，原因时settings.py里没有导入os, 在开头 import os 后问题解决
+
+(5).在settings.py的INSTALLED_APPS应用里填上我们新建的项目，student
+
+(6).（当有多个app时，就会创建一个容器来装入这些app）选中StudentV4BE，右键New——>Python Package ——>apps
+
+(7). 将student拖进apps
+
+(8).为了防止新建apps容器不被识别，要做两个操作：
+I. 鼠标选中apps,右键点击选择Mark Directory as ——>Sources Root
+II. 在Django，settings.py里加入sys模块，注意是 import os,sys
+然后在BASE_DIR下面添加路径：sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
+
+(9)设计数据库，在apps里面的student项目里的models.py配置语句
+
+(10)在settings.py里配置DATABASES，采用mysql(centos7服务器)
+
+(11)在apps里的student项目目录里，修改__init__.py，导入pymysql
+(提前准备好mysql数据库里的库，这个需要自己创建)
+
+(12)将models.py里的类映射到数据库里的库：
+I. python manage.py makemigrations
+(运行后报了错误，mysqlclient 1.4.0 or newer is required； you have 0.10.0.，解决办法在__init__.py里添加：
+import pymysql
+pymysql.version_info = (1, 4, 13, "final", 0)  # 添加这个
+pymysql.install_as_MySQLdb())
+
+(再次报错：Access denied for user 'root'@'192.168.0.106'，解决办法：
+数据库里重新授权，grant all on StudentV4DB.* to 'root'@'%' identified by '123456';
+然后再flush privileges; 错误原因采用了'%'@'%'的模式，导致的错误）
+
+最后成功映射！
+
+II. 执行生成的映射脚本，在数据库里建立相应的表：
+python manage.py migrate
+
+(13)将数据导入数据库，比如：
+INSERT INTO `Student` VALUES ('95001', '王进', '男', '2020-02-01', '13900998877', 'wangjin@abc.com', '江苏省南京市溧水区宝塔路11号', 'e8ec33473c6d16a19d280b8dc634758c.jpg');
+
+
+
+
+
