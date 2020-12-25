@@ -1,0 +1,33 @@
+读取Excel文件：
+1.在后端新建 tests.py文件
+
+2. 编写 read_excel_dict 函数
+
+3. pycharm 里 直接 run tests.py 文件
+
+============================================
+实现从Excel 批量导入数据后端接口：
+1. 在 后端 views.py 里编写 import_students_excel 函数
+
+=======================================================
+完成Excel 批量导入的功能
+1. 在 index.js 里 编写uploadExcelPost 代码
+
+2. 在Element 官网上 找到 MessageBox 弹框，找到消息提示，复制this.$alert('这是一段内容', '标题名称', {
+          confirmButtonText: '确定',
+          callback: action => {
+            this.$message({
+              type: 'info',
+              message: `action: ${ action }`
+            });
+          }
+        });
+
+================================================================
+完成导出到Excel 的功能：
+1.在 views.py 里 编写 export_student_excel 函数
+
+2. 在 index.js 里 编写 exportToExcel(){} 代码
+
+3. 在 index.html 里 的 导出 Excel 按钮旁 绑定 exportToExcel 这个时间，也就是这个 @click="exportToExcel()"
+
