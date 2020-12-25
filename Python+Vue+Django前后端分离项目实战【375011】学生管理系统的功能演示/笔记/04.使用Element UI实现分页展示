@@ -1,0 +1,74 @@
+使用Element UI实现分页展示
+1. 在index.html里添加分页模块，在</el-table>下面添加<el-row>,具体看代码
+
+2. 增加一页两行的代码，设置距离span以及位置text-align靠左或靠右，然后复制el-button代码
+
+3. 打开Element官网，找一个批量删除的图标，设置size为mini
+
+4. 在Element官网上找到Pagination分页，选择附加功能，点击显示代码，复制完整功能下面的<el-pagination>代码,到 index.html里面的<el-col :span="16" style="text-align: right;">里面
+
+5.  先去掉这两个函数@size-change="handleSizeChange" @current-change="handleCurrentChange"
+
+6. 在 index.js里面添加total:100 数据的总行数，添加currentpage这个变量，以及pagesize这个变量
+
+7. 修改显示的页数，将复制来的100,200,300,400改为5,10,50,100
+（报了错误：currentpage is not defined，原因是在index.js里，currentpage的对齐方式没对【空四格就行了】，所以一直没有找到这个变量）
+
+=======================================================================================================
+实现获取所有学生的后端接口
+1.  RESTful api的设计(后端接口通用规范--restful)
+
+2. 打开W7的pycharm,在apps(项目应用)里的views.py里，填写代码:引入Student的类，创建获取所有学生信息的函数
+
+3.  使用ORM获取所有学生的信息
+
+4.  把结果转为list类型
+
+5. 引入JsonResponse模块
+
+6.  返回JsonResponse格式
+
+7.  改为try捕获异常模式
+
+8.  填写urls.py的代码
+
+9. 试着运行python manage.py runserver
+(报了doesn't declare an explicit 这样的错误，解决办法是导入模块时，使用 from apps.student.models import Student 这样的方式)
+
+==================================================================================================================
+Vue中使用Axios请求后端接口的数据
+1. 访问axios中文官网
+
+2. 复制axios的cdn使用代码，到 index.html里面
+
+3.  可以将index.js 里手动写的数据给删除了
+
+4. 在 index.js里新建methods函数，用来获取所有学生信息，并且使用Axios实现Ajax请求
+
+5. 重新运行django服务器，并且指定ip地址，比如 python manage.py runserver 192.168.254.129:8000
+
+6.  在w7，django里的settings.py里添加允许外界来访问这边的ip地址，比如w7的IP为 192.168.254.129，则在settings.py里的ALLOWED_HOSTS里填入w7的这个地址'192.168.254.129'(加引号填入)
+
+7. 在 index.js里的methods函数中的get()函数里，填入“http://192.168.254.129:8000/students/” 这个地址
+（实际开发中是通过变量名来做的，在data函数里，定义baseURL:"http://192.168.254.129:8000/", 然后便在get()函数里填入this.baseURL + "students/"）
+
+8.  定义index.js里的methods函数里的then()函数，定义请求成功后执行的函数
+
+9.  定义index.js里的methods函数里的catch()函数
+
+10. 在index.js里定义mounted()函数，实现自动加载数据
+
+===========================================================================================================================
+解决Ajax的跨域请求
+1. w7安装：pip install django-cors-headers
+
+2. 注册到Settings的INSTALLED_APPS中
+
+3. 添加到Settings的MIDDLEWARE中，放到第二行的下面
+‘corsheaders.middleware.CorsMiddleware’
+
+4. 添加允许访问的白名单，凡是出现在白名单的域名都可以访问后端借口
+CORS_ORIGIN_WHITELIST = ('192.168.182.1:8080', ) 或者 CORS_ORIGIN_ALLOW_ALL = True 
+CORS_ALLOW_CREDENTIALS = True  # 指明在跨域访问中，后端是否支持对cookie的操作。
+
+5. 重新启动django服务器，并且指定ip和端口
