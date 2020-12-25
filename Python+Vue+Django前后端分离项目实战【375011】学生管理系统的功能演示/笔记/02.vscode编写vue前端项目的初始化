@@ -1,0 +1,39 @@
+1. 安装vscode（网上下载）
+
+2. 搜索两个插件并安装：Vue 2 Snippets、Live Server
+
+3. 在vscode里打开E:\京峰\京峰视频\python\python项目\Python+Vue+Django前后端分离项目实战【375011】学生管理系统的功能演示\Web\ForeProject\StudentV4FE目录，然后新建html5页面，修改title为学生信息管理系统。
+
+4. 百度搜索Vue.js官网, 然后点击学习——>教程
+
+5. 在<head>标签里，使用CDN引入Vue模块
+
+6. 在<body>里输入div#app，按回车。自动生成格式
+
+7. 在</html>下面添加<script>标签。
+
+8. <script>标签里添加const。
+
+9. 在<body>标签里的<div>标签里，添加msg。
+
+10. 鼠标右键，选择open live with server ，在网页里打开
+
+11. 添加css文件夹,image文件夹,js文件夹
+
+12. 在css文件夹里添加index.css
+
+13. 在index.css里添加#app
+
+14. 在<head>里添加引入外部的样式文件，./css/index.css
+
+15. 修改index.css，里面添加color,font-weight
+
+16.在js文件夹里新建index.js
+
+17. 在index.html里的<script>里的内容剪切到index.js文件里，接着把index.html文件里的<script>标签删掉
+
+18.  在index.html文件里引入Vue代码，通过<script>标签
+
+19.  分开成两个窗口，index.html在左面，index.js在右面，方便修改代码
+
+ 
