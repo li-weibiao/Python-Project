@@ -1,0 +1,55 @@
+本地开发环境（个人开发）：
+
+1.安装ubantu
+
+
+2.查看安装好 sshd 没
+1）ps aux|grep sshd   # 如果没有/usr/sbin/sshd -D 则表示 SSH 守护进程没有启动
+
+2）sudo apt-get install ssh  # 没有则通过 apt-get 安装
+
+
+3.下载putty
+http://www.chiark.greenend.org.uk/~sgtatham/putty/
+
+
+4.安装中文语言包
+1）sudo apt-get install language-pack-zh-hans
+
+2) sudo update-locale LANG=zh_CN.UTF-8
+
+
+5.在 .bashrc中设置用于设定语言的环境变量
+export LANG="zh_CN.UTF-8"
+export LANGUAGE="zh_CN:zh"
+
+
+6.用source 命令反应设置
+source ~/.bashrc
+
+
+7.添加组
+sudo groupadd dev
+
+
+8.添加用户
+sudo adduser bpuser --ingroup dev  # --ingroup 选项指定 dev 可以让新用户加入dev组
+
+
+9.删除用户
+sudo userdel -r bpuser
+
+
+10.向组添加用户
+sudo usermod -aG sudo bpuser  # 添加到sudo 组，可以让组员使用 sudo 命令
+
+
+11.让用户执行sudo命令时，免去输入密码的麻烦
+1）sudo visudo -f /etc/sudoers.d/dev 
+
+2）写入%admin ALL=(ALL) NOPASSWD: ALL   # 可以百度 visudo的使用，ctrl + o 写入，ctrl + x 退出
+
+
+
+
+
