@@ -44,7 +44,7 @@ sudo userdel -r bpuser
 sudo usermod -aG sudo bpuser  # 添加到sudo 组，可以让组员使用 sudo 命令
 
 
-11.让用户执行sudo命令时，免去输入密码的麻烦
+11.让组里的用户执行sudo命令时，免去输入密码的麻烦
 1）sudo visudo -f /etc/sudoers.d/dev 
 
 2）写入%admin ALL=(ALL) NOPASSWD: ALL   # 可以百度 visudo的使用，ctrl + o 写入，ctrl + x 退出
