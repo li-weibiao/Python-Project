@@ -1,0 +1,93 @@
+1.安装 deb 包
+ubantu用apt-get命令管理包，先更新所有包，同时安装一些Python开发所需的包
+
+1.1）deb包的更新，升级
+sudo apt-get -y update  # 出现"E: Some index files failed to download, they have been ignored, or old ones used instead."的错误提示问题,解决办法替换/etc/apt/sources.list里的源，参考：https://blog.csdn.net/bigboygo/article/details/77119334  （注意：我改的是清华的源，案例的阿里源无效，https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/，新添了些源：https://www.linuxidc.com/linux/2012-07/65762.htm）
+
+sudo apt-get -y upgrade  
+
+sudo apt-get -y install build-essential  # 这个必装，后面的看情况
+
+sudo apt-get -y install libsqlite3-dev
+
+sudo apt-get -y install libreadline6-dev
+
+sudo apt-get -y install libgdbm-dev
+
+sudo apt-get -y install zlib1g-dev
+
+sudo apt-get -y install libbz2-dev
+
+sudo apt-get -y install sqlite3
+
+sudo apt-get -y install tk-dev
+
+sudo apt-get -y install zip
+
+sudo apt-get -y install libssl-dev
+
+
+1.2）安装Python相关的包
+sudo apt-get -y install python-dev
+
+#安装pip(下面方法用不了，就百度)
+wget https://bootstrap.pypa.io/get-pip.py
+
+sudo python get-pip.py
+
+
+1.3）查看python版本
+$ python -V
+Python 2.7.6
+
+(注：Python 3.4 有ensurepip 模块，可在安装Python时，同时就安装了pip,不需要执行 get-pip.py来进行安装)
+
+用 pip install 命令可以安装第三方开发的包，第三方包注册在PyPI上。
+
+
+1.4）查看pip的版本
+$ pip --version
+pip 20.3.3 from /usr/local/lib/python2.7/dist-packages/pip (python 2.7)
+
+上面的pip安装在 dist-packages 目录下
+
+
+1.5）通过 pip安装包
+$ sudo pip install virtualenv  （Cannot uninstall 'six'.报错解决方法：https://www.cnblogs.com/qq952693358/p/9425544.html）
+
+
+1.6）查看 virtualenv 的版本
+$ virtualenv --version
+virtualenv 20.2.2 from /usr/local/lib/python2.7/dist-packages/virtualenv/__init__.pyc
+
+
+1.7）用 pip freeze 查看当前安装版本
+$ pip freeze
+
+
+1.8）搭建 virtualenv 环境
+在主目录（HOME目录）下创建工作目录：
+$ mkdir ~/work
+
+$ cd ~/work
+
+$ virtualenv venv
+
+执行上述命令后，work目录下会自动生成 venv 目录。
+
+
+
+1.9）启动 virtualenv 环境
+$ source venv/bin/activate  # 这是在work目录下
+
+
+
+
+1.10）在虚拟环境下查看版本
+(venv) bpuser@ubuntu-14:~/work$ pip freeze
+
+
+1.11）关闭 virtualenv环境
+(venv) bpuser@ubuntu-14:~/work$ deactivate
+
+
