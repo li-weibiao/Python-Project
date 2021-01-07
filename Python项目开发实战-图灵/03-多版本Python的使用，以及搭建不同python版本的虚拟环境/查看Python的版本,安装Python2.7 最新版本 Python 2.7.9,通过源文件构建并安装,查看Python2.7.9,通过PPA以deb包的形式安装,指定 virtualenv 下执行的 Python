@@ -1,0 +1,56 @@
+1.1.4 多版本Python的使用
+1.12）查看Python的版本
+bpuser@ubuntu-14:~$ python3 -V
+Python 3.4.3
+
+$ python -V
+Python 2.7.6
+
+
+安装Python2.7 最新版本 Python 2.7.9
+1.13）通过源文件构建并安装
+$ wget https://www.python.org/ftp/python/2.7.9/Python-2.7.9.tgz
+
+$ tar xvzf Python-2.7.9.tgz
+
+$ cd Python-2.7.9/
+
+$ LDFLAGS="-L/usr/lib/x86_64-linux-gnu" ./configure --prefix=/opt/python2.7.9
+
+$ make
+
+$ sudo make install
+
+该Python 将被安装到 /opt/python2.7.9/bin 下
+
+
+1.14）查看Python2.7.9
+$ /opt/python2.7.9/bin/python -V
+Python 2.7.9
+
+
+Python2.6版本 官方早已不支持，但可以通过PPA安装软件，但注意PPA里的软件为个人上传，一切使用后果自己负责。
+1.15）通过PPA以deb包的形式安装
+$ sudo add-apt-repository ppa:fkrull/deadsnakes
+
+$ sudo apt-get -y update
+
+$ sudo apt-get -y install python2.6
+
+$ python2.6 -V
+
+如果缺少Python模块，则会发生 ImportError 的错误
+
+
+借助 virtualenv 分别使用不同版本的Python
+1.16）指定 virtualenv 下执行的 Python
+$ virtualenv --python=/opt/python2.7.9/bin/python venv2  #会在当前目录下生成 venv2
+
+$ source venv2/bin/activate
+(venv2) bpuser@ubuntu-14:~$ python -V
+Python 2.7.9
+
+进行指定后，以/opt/python2.7.9/bin/python 为基础的 virtualenv——venu2就搭建完成了
+
+
+
