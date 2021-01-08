@@ -90,4 +90,6 @@ $ hg diff
 
 
 1.26）hg revert（撤销编辑）
-hg revert 可以撤销尚未提交的内容，但对已提交的内容无效，如果要对已提交的内容修改，则需要用到 hg commit --amend 命令。
+$ hg revert --all
+
+# hg revert 可以撤销尚未提交的内容，但对已提交的内容无效，如果要对已提交的内容修改，则需要用到 hg commit --amend 命令。
