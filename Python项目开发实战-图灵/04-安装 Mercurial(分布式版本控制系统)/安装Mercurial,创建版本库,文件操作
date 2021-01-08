@@ -1,0 +1,93 @@
+1.2 安装 Mercurial(分布式版本控制系统)
+Mercurial 本身是由Python编写而成的，可以通过pip直接安装
+Mercurial 内置了基于Web的管理工具，支持 Bitbucket 等著名源码托管服务， TortoiseHg等GUI客户端丰富。
+
+
+1.2.2 安装Mercurial
+
+1.17）安装Mercurial
+$ sudo pip install mercurial  # 运行这个命令的时候，报了错，我换了个方法，用apt-get,也就是 sudo apt-get install mercurial
+
+
+1.18）查看Mercurial的安装情况
+$ hg --version
+分布式软件配置管理工具 - 水银 (版本 2.8.2)
+
+
+
+1.2.3 创建版本库
+
+在主目录下创建名为 .hgrc的文件
+[ui]节就是用来设置 username属性的
+1.19）设置 .hgrc的用户名与邮箱地址
+[ui]
+username=bpbook<bpbook@beproud.jp>
+[extensions]
+color=
+pager=
+[pager]
+pager=LESS='FSRX'less
+
+
+# [extensions]节用来激活Mercurial附属的扩展工具，只要将扩展工具名写入[extensions]节的项目中，
+我们就可以使用该工具了，此外某些扩展工具不仅要在[extensions]中设置激活，还需要在[pager]节中
+设置pager属性。
+
+
+1.20）hg init（初始化版本库）
+$ mkdir ~/hgtest
+$ cd ~/hgtest/
+$ hg init
+
+
+1.2.4 文件操作
+
+添加文件做测试
+1.21）hg status(查看状态)
+$ touch test.txt   # 在创建的/hgtest目录里
+$ hg status
+? test.txt
+
+# ？代表该文件现在并不在版本管理的范围内，将它 hg add 添加进去就行了，就成为了版本管理的对象。
+
+
+1.22）hg add（添加文件）
+$ hg add test.txt
+$ hg status
+A test.txt
+
+# A代表该文件是新添加到版本管理里的，要把文件反应到版本库，需要输入 hg commit 命令，如果不输入这个
+命令，则该文件只能停留在当前工作的机器里。
+
+
+1.23） hg commit（提交）
+$ hg commit
+
+# branch 'default' 表示default分支，为我们当前进行修正/添加操作的对象
+
+# 提交的编辑器可以更改，可以改为下面这样
+[ui]
+editor=vim
+
+# 默认启动的编辑器可以用 $ echo $EDITOR 命令来查看
+
+
+1.24）提交后的查看
+$ hg status
+
+# 接下来修改 test.txt里的内容
+i love asuka 
+
+# 接下来再查看状态
+$ hg status
+M test.txt
+
+# 出现了M，表示内容有变化，使用 hg diff 命令可以查看变更前的状态（已提交的文件）与当前状态的差别
+
+
+1.25）hg diff（查看差别）
+$ hg diff
+
+
+1.26）hg revert（撤销编辑）
+hg revert 可以撤销尚未提交的内容，但对已提交的内容无效，如果要对已提交的内容修改，则需要用到 hg commit --amend 命令。
