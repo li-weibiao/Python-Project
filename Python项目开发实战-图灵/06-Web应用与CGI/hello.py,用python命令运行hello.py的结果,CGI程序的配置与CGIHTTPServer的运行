@@ -1,0 +1,48 @@
+Web应用与CGI
+CGI是web服务器运行web应用的一种机制，web服务器执行CGI程序（脚本），然后将
+输出结果作为HTTP通信的响应返回给对方，最简单的CGI程序就是在控制台界面上显示字符串。
+
+CGIHTTPServer是Python标准模块中Web服务器，它可以运行CGI程序。
+
+2.1）hello.py
+#!/usr/bin/env python
+print "200 OK"
+print "Content-Type:text/plain"
+print ""
+print "Hello CGI"
+
+#用python命令运行这个脚本
+
+
+2.2）用python命令运行hello.py的结果
+$ python hello.py
+200 OK
+Content-Type:text/plain
+
+Hello CGI
+
+#用CGIHTTPServer运行CGI程序时，运行文件必须位于cgi-bin目录下，所以要创建这个目录，并且
+要将hello.py放进去，另外还必须要有运行权限，因此要用chmod命令赋予运行权限，配置好CGI程序之后，
+就可以按照下面的例子，用python命令的-m选项运行CGIHTTPServer了。
+
+
+2.3）CGI程序的配置与CGIHTTPServer的运行
+$ mkdir cgi-bin
+$ mv jiaoBen/hello.py cgi-bin/  # 将hello.py脚本移动到cgi-bin/目录下
+$ sudo chmod u+x cgi-bin/hello.py
+$ python -m CGIHTTPServer
+Serving HTTP on 0.0.0.0 port 8000 ...
+OSError: [Errno 13] Permission denied
+192.168.255.1 - - [08/Jan/2021 21:39:34] CGI script exit status 0x7f00
+127.0.0.1 - - [08/Jan/2021 21:41:16] "GET /cgi-bin/hello.py HTTP/1.1" 200 
+
+#访问ubantu虚拟机：http://192.168.255.129:8000/cgi-bin/hello.py
+#访问报了Permission denied 错，见上方的记录，那是因为没有权限，解决的办法 $ sudo chmod -R 777 某一目录，参考：https://blog.csdn.net/qq_16525279/article/details/80245350
+#修改后，就可以在页面上看到Hello CGI的字样，本例中的CGI程序由Python代码编写而成，实际上只要CGI程序能够进行标准输出，用任何语言都没有问题
+
+
+
+
+
+
+
