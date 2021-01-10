@@ -1,0 +1,115 @@
+2.2 Web应用与应用服务器
+应用服务器指能运行Web应用的功能，且能与Web服务器通信的服务器。
+如果一个应用服务器可以通过HTTP通信，那么我们就可以用Web浏览器访问它。
+
+Flask内置了用于开发的应用服务器（Web服务器），因此不需要再另外准备Web服务器。
+
+
+2.2.1 关于Flask
+Flask 是一个用 Python编写的 Web应用框架，它整合了Werkzeug（WSGI实用工具）和 jinja2（模版引擎）两个库。
+用它可以轻松完成小规模的应用程序开发。
+
+
+2.2.2 安装Flask
+安装Flask之前，我们先用 virtualenv 命令搭建开发应用所需的虚拟环境。
+
+
+2.4）搭建名为venv的虚拟环境
+$ virtualenv venv
+
+
+2.5）启动虚拟环境venv
+$ source venv/bin/activate   # 通过执行venv/bin/目录下的，activate脚本
+
+# Windows 需要使用 venv/Scripts/activate 命令启动虚拟环境
+
+
+2.6）在虚拟环境 venv里用pip命令安装Flask
+(venv) bpuser@ubuntu-14:~/work$ pip install -U Flask  # 使用 -U选项之后，可以用新版本替换已经安装的旧版本
+
+
+
+2.3 Web应用的开发流程
+1.确认需求（确认要开发什么应用）
+2.根据需求明确成品必备的功能
+3.根据功能明确成品必备的页面
+4.页面设计
+5.实现功能
+6.将功能植入到页面中
+7.确认是否能正常运行
+8.完成
+
+
+
+2.4 明确要开发什么应用
+
+2.4.1 留言板应用的需求
+
+2.4.2 明确必备的功能
+
+2.4.3 明确必备的页面
+
+
+2.5 页面设计
+先实现页面而非功能，可以更好的把握成品应用的整体映像。
+在把功能植入系统之前，即页面设计阶段，我们需要先写好HTML文件和CSS文件。
+
+2.5.1 确定成品页面的形式
+可以绘画成草图，并添加注释
+
+2.5.2 编写HTML和CSS
+先在真机里编写，查看效果，然后再通过scp传入
+
+页面布局这些外观上的东西，可以留在编写CSS文件的时候，进行调整
+
+2.7）index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>留言板</title>
+</head>
+<body>
+<h1>留言板</h1>
+<form action="/post" method="post">
+    <p>请留言</p>
+    <table>
+        <tr>
+            <th>名字</th>
+            <td>
+                <input type="text" size="20" name="name">
+            </td>
+        </tr>
+        <tr>
+        <th>留言</th>
+        <td>
+            <textarea rows="5" cols="40" name="comment"></textarea>
+        </td>
+        </tr>
+    </table>
+<p><button type="submit">提交</button></p>
+</form>
+<div>
+    <h2>留言记录</h2>
+    <h3>游客 的留言（2021/1/9 19:00:00）</h3>
+    <p>
+        留言内容<br>
+        留言内容
+    </p>
+    <h3>游客 的留言（2021/1/9 19:00:00）</h3>
+    <p>
+        留言内容<br>
+        留言内容
+    </p>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
