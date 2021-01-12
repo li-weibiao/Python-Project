@@ -1,0 +1,144 @@
+获取已保存的留言列表：
+实际上，我们在保存数据的时候，就从 shelve模块中取出过数据。
+现在只把这部分代码单独拿出来做成函数即可。
+
+2.13）guestbook.py
+def load_data():
+    """返回已提交的数据"""
+    # 通过shelve模块打开数据库文件
+    database = shelve.open(DATA_FILE)
+    # 返回greeting_list,如果没有数据则返回空表
+    greeting_list = database.get('greeting_list', [])
+    database.close()
+    return greeting_list
+
+# 这里同样通过 Python shell 查看运行情况
+
+
+2.14）load_data 函数的运行测试
+>>> from guestbook import load_data
+>>> load_data()
+[{'comment': 'test comment', 'name': 'test', 'create_at': datetime.datetime(2021, 1, 10, 13, 54)}]
+
+# 如果运行正常，那就表示我们能获取save_data函数保存下来的数据。
+
+
+2.6.3  用模版引擎显示页面
+从文件中取出数据之后，为了将其显示到页面上，我们要使用模版引擎。
+模版引擎可以将模版（程序的雏形）与要植入模版内的数据合并输出。
+Flask标准支持 jinjia2模版引擎。
+
+接下来创建 templates目录，然后将前面已经写好的HTML文件放到该目录下，这样一来，
+我们就可以以它为模版生成HTML了。
+
+2.15）放置模版
+$ mkdir templates
+$ mv index.html templates/
+
+下面从程序端入手，用这个HTML文件（模版）来完成页面的显示，先添加代码，
+让guestbook.py 调用 Flask,然后再添加用来显示首页的函数，以及用来启动
+Web服务器的代码。
+
+2.16）guestbook.py
+#coding:utf-8
+import shelve
+from flask import Flask,request,render_template,redirect,escape,Markup
+
+application = Flask(__name__)
+DATA_FILE = 'guestbook.dat'
+
+def save_data(name, comment, create_at):
+    '''保存提交的数据'''
+    省略
+
+def load_data():
+    """返回已提交的数据"""
+   省略
+
+@application.route('/')
+def index():
+    """首页使用模版显示页面"""
+    return render_template('index.html')
+
+if __name__ == "__main__":
+    # 在IP地址127.0.0.1的8000端口运行应用程序
+    application.run('127.0.0.1',8000,debug=True)
+
+    
+# 我们将Flask类的实例赋给变量 application,传值参数指定为__name__变量
+的模块名。方法route是一个装饰器，负责注册针对特定URL执行的函数。
+这里我们让主页的URL对应执行index函数。
+render_template函数负责将指定文件用作模版，再通过模版引擎进行输出。
+
+Flask类的run方法用于启动Web服务器并执行应用程序，传值参数用来指定要绑定的IP地址及
+端口。另外，将debug选项指定为True时，一旦应用程序出错，Web浏览器就会启动可用的调试程序。
+
+接下来用python命令运行guestbook.py。
+
+
+2.17）运行已开发完毕的Web应用
+$ python guestbook.py   # 我是在虚拟环境下运行的
+* Running on http://192.168.255.129:8000/ (Press CTRL+C to quit)
+* Restarting with stat
+
+# 我们会发现CSS文件并没有生效，所以需要重新调整一下CSS文件的位置，让它能够被读取。
+Flask会公开static目录存放的静态文件。接下来我们会创建一个static目录，把main.css文件放进去。
+
+
+2.18）放置静态文件
+$ mkdir static
+$ mv main.css static/
+
+# 另外，还要将templates/index.html中的CSS文件引用位置改为/static/main.css
+
+
+2.19）templates/index.html（更改前）
+<link rel="stylesheet" href="main.css" type="text/css">
+
+
+2.10）templates/index.html（更改后）
+<link rel="stylesheet" href="/static/main.css" type="text/css">
+
+
+# 现在再用Web浏览器打开该页面，就会发现CSS文件这时已经生效了。
+
+接下来，我们把从数据库中取出的内容显示在页面上，修改guestbook.py文件，
+让index函数调用load_data函数，同时使模版能够使用load_data函数取出来的数据。
+
+
+2.21）guestbook.py
+@application.route('/')
+def index():
+    """首页使用模版显示页面"""
+    # 读取已提交的数据
+    greeting_list = load_data()
+    return render_template('index.html', greeting_list=greeting_list)
+
+# render_template函数可以将关键字传值参数所指定的值用作模版变量。比如本例中就用了
+greeting_list的模版变量
+
+此外，我们还要修改模版templates/index.html，使其能够使用模版变量进行显示。
+现在对HTML中的显示留言部分作如下修改。
+
+
+2.22）templates/index.html
+<div class="entries-area">
+    <h2>留言记录</h2>
+    {% for greeting in greeting_list %}
+    <h3>{{greeting.name}} 的留言({{greeting.create_at}}):</h3>
+    <p>{{greeting.comment}}</p>
+    {% endfor %}
+</div>
+
+# 模版内可以使用一种特殊的描述方式，即模板语言。jinjia2的模版可以通过{%...%}的
+形式使用if或for等控制语句。植入有模版变量的部分用{{...}}形式描述。在上述模版中，程序会从
+greeting_list中逐一取值并赋给模版变量greeting，然后使用从for到endfor之间的模版变量进行循环输出。
+
+这样一来，应用就能将save_data的函数保存的数据显示在页面上了。
+
+
+ 
+
+
+
+ 
