@@ -1,0 +1,139 @@
+编写CSS文件，调整字体大小，颜色，显示位置等外观（风格）。
+
+2.8）main.css
+body{
+    margin: 0;
+    padding: 0;
+    color:#000E41;
+    background-color: #004080;
+}
+h1{
+    padding: 0 1em;
+    color: #FFFFFF;
+}
+form{
+    padding: 0.5em 2em;
+    background-color: #78B8F8;
+}
+.main{
+    padding: 0;
+}
+.entries-area{
+    padding: 0.5em 2em;
+    background-color: #FFFFFF;
+}
+.entries-area p{
+    padding: 0.5em 1em;
+    background-color: #DBDBFF;
+}
+
+# 为了让这个样式表生效，我们需要在HTML文件中添加link标签读取CSS，并在相应位置指定class。
+
+
+2.9）修改后的index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>留言板</title>
+    <link rel="stylesheet" href="main.css" type="text/css">  <!--添加link标签-->
+</head>
+<body>
+<h1>留言板</h1>
+<form action="/post" method="post">
+    <p>请留言</p>
+    <table>
+        <tr>
+            <th>名字</th>
+            <td>
+                <input type="text" size="20" name="name">
+            </td>
+        </tr>
+        <tr>
+        <th>留言</th>
+        <td>
+            <textarea rows="5" cols="40" name="comment"></textarea>
+        </td>
+        </tr>
+    </table>
+<p><button type="submit">提交</button></p>
+</form>
+<div>
+    <h2>留言记录</h2>
+    <h3>游客 的留言（2021/1/9 19:00:00）</h3>
+    <p>
+        留言内容<br>
+        留言内容
+    </p>
+    <h3>游客 的留言（2021/1/9 19:00:00）</h3>
+    <p>
+        留言内容<br>
+        留言内容
+    </p>
+</div>
+</body>
+</html>
+
+
+2.10）用scp命令发送index.html，main.css文件到ubantu
+scp -P 2222 index.html main.css bpuser@192.168.255.12
+9:
+
+
+2.6 实现功能
+编写Python程序，优先实现比较重要的功能，或者能提高其他部分实现速度的功能。
+在这里，保存和读取用户提交的数据是这个应用的核心部分，先从它入手。
+
+
+2.6.1）保存留言数据
+这里用Python的标准模块，shelve来存储数据，shelve能够像Python字典对象一样操作数据，将对象持久化，也就是说，
+shelve能将数据转换成字典对象，以列表形式保存多个字典，并且保存在shelve中。
+
+下面来编写留言板的脚本文件，guestbook.py实现了保存数据的save_data函数。
+
+2.11）guestbook.py
+#coding:utf-8
+import shelve
+
+DATA_FILE = 'guestbook.dat'
+
+def save_data(name, comment, create_at):
+    '''保存提交的数据'''
+    # 通过shelve模块打开数据库文件
+    database = shelve.open(DATA_FILE)
+    # 如果数据库中没有greeting_list,就新建一个表
+    if 'greeting_list' not in database:
+        greeting_list = []
+    else:
+        # 从数据库获取数据
+        greeting_list = database['greeting_list']
+    # 将提交的数据添加到表头
+    greeting_list.insert(0,{
+        'name':name,
+        'comment':comment,
+        'create_at':create_at,
+    })
+    # 更新数据库
+    database['greeting_list'] = greeting_list
+    # 关闭数据库文件
+    database.close()
+
+
+# 然后来看看 save_data函数的运行情况，通过终端在guestbook.py文件所在的目录下启动Python shell，
+通过Python shell 加载并执行 guestbook模块的 save_data函数。
+
+
+2.12）save_data函数的运行测试
+$ ls  # 确认guestbook.py位于当前目录下
+guestbook.py
+$ python  # 启动Python shell
+>>> import datetime
+>>> from guestbook import save_data
+>>> save_data('test','test comment', datetime.datetime(2021,1,10,13,54,0))
+
+# 这里我们将 datetime模块的日期时间对象传递给传值参数 create_at，以此来保存提交的日期和时间。
+等取出数据的功能实现之后，我们便能知道数据是否被真的保存下来了
+
+
+
+
