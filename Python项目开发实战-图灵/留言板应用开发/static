@@ -1,3 +1,5 @@
+# 这个因该是static目录里的main.css文件
+
 body{
     margin: 0;
     padding: 0;
