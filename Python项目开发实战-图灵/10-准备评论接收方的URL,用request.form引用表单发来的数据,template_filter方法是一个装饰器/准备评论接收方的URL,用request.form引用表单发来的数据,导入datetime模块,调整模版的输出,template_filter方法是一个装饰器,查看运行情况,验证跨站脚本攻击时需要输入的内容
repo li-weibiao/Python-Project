@@ -1,0 +1,82 @@
+2.6.4  准备评论接收方的URL
+下一步我们用save_data函数保存表单提交来的数据。由于模版文件表单的action值为/post,所以我们就做出这个URL。
+这里，我们将post函数添加到guestbook.py的if __main__ 的前面。
+
+2.23）guestbook.py
+@application.route('/post', methods=['POST'])
+def post():
+    '''用于提交评论的URL'''
+    # 获取已提交的数据
+    name = request.form.get('name')  # 名字
+    comment = request.form.get('comment')  # 留言
+    create_at = datetime.now() # 投稿时间（当前时间）
+    # 保存数据
+    save_data(name, comment, create_at)
+    # 保存后重定向到首页
+    return redirect('/')
+
+#在Flask中，可以用request.form引用表单发来的数据。此外，由于保存数据后需要重新显示首页，
+所以我们要返回redirect函数的结果并进行重定向。
+post函数使用了datetime模块，所以需要在文件开头添加代码，以导入该模块。
+
+
+2.24）导入datetime模块（guestbook.py）
+#coding:utf-8
+import shelve
+from datetime import datetime  # 添加此行
+
+# 至此，保存数据的功能也实现了，应用的运行部分基本完工。
+
+
+2.6.5 调整模版的输出
+程序运行所需的功能现在已经基本上都实现了，但这里至少还有两点需要注意。
+表单提交多行留言时，无法正常显示留言。
+显示的时间精确到了毫秒。
+要想解决这两个问题，需要创建一个模版过滤器。模版过滤器会对模版变量的值加以转换并输出。
+接下来，我们在guestbook.py的if __main__ 前添加代码，将模版过滤器导入模版。
+
+2.25）guestbook.py
+@application.template_filter('nl2br')
+def nl2br_filter(s):
+    '''将换行符置换为br标签的模版过滤器'''
+    return escape(s).replace('\n', Markup('<br>'))
+
+@application.template_filter('datetime_fmt')
+def datetime_fmt_filter(dt):
+    '''使datetime对象更容易分辨的模版过滤器'''
+    return dt.strftime('%Y/%m/%d %H:%M:%S')
+
+# Flask类的template_filter方法是一个装饰器，它负责将函数注册为指定名称的模版过滤器。
+程序运行时，指定了模版过滤器的模版变量会被作为传值参数传递给相应函数。
+而函数的返回值则为最后输出的值。
+在上述源码中，我们注册了nl2br，datetime_fmt两个模版过滤器。
+接下里，我们修改一下templates/index.html文件，让模版能够使用这两个模版过滤器。
+
+
+2.26）templates/index.html
+<div class="entries-area">
+    <h2>留言记录</h2>
+    {% for greeting in greeting_list %}
+    <h3>{{greeting.name}} 的留言({{greeting.create_at|datetime_fmt}}):</h3>
+    <p>{{greeting.comment|nl2br}}</p>
+    {% endfor %}
+</div>
+
+# 在模版内指定模版过滤器的方法很简单，只需要在模版变量的名称后面加管道符“|”再加模版过滤器名即可。
+在本次的模版中，我们给 greeting.create_at指定了 datetime_fmt过滤器，给greeting.comment指定了 nl2br过滤器。
+
+至此，服务器端的功能，功能与页面的对接已经全部完工。
+
+整个应用的开发过程到这里就结束了，接下来就是确认该应用的运行是否正常，以及看一看成品是否能满足我们当初定下的需求。
+
+
+2.7 查看运行情况
+运行程序测试功能。
+
+
+2.27）验证跨站脚本攻击时需要输入的内容
+<script>alert('NG')</script>
+
+# 我们在本次开发中使用的是jinjia2模版引擎，它在翻译字符串时，会自动忽略HTML标签的“<和>”符号，我们的应用能够成功避免XSS漏洞。
+
+同时也要注意CSRF攻击。
