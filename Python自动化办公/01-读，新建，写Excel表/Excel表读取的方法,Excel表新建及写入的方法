@@ -1,0 +1,23 @@
+import xlrd  # 需要指定下载xlrd 1.2.0版本,这里是导入读,pip install xlrd==1.2.0
+import xlwt  # 导入写,可以用来新建工作簿
+
+# Excel表读取的方法
+xlsx = xlrd.open_workbook('D:/7月下旬入库表.xlsx')  # 打开指定的工作簿
+table = xlsx.sheet_by_index(0)  # 通过下坐标索引的方式打开表，第一个是由0开始，表示下坐标第一个表，这个表为7月下旬入库表
+# table = xlsx.sheet_by_name('7月下旬入库表')  # 通过下坐标名字的方式打开表
+print(table.cell_value(0, 0))  # （行，列）
+print(table.cell_value(1, 2))
+print(table.cell(1, 2).value)  # 另一种显示值的方式，（行，列）
+print(table.row(1)[2].value)  # （行）[列]
+
+# Excel表新建及写入的方法
+new_workbook = xlwt.Workbook()  # 新建工作簿
+workSheet = new_workbook.add_sheet('new_test')  # 在新建的工作簿里新建工作表，也就是下坐标，例如7月下旬入库表，括号里是表名
+workSheet.write(0, 0, 'test')  # 写入内容，（行，列，‘内容’）
+new_workbook.save('d:/test.xls')  # 将新建的工作簿保存在d盘，名字为test.xls
+
+
+
+
+
+
