@@ -1,0 +1,26 @@
+# 逐行读取《7月下旬入库表》中所有的内容，并将读取到的内容写入到一个新的Excel中。
+# 1星级完成任务，2星级使用不超过10行代码完成任务，3星级使用xlsxwriter库完成任务。
+
+#1、2星答案
+# import xlrd,xlwt
+# xlsx = xlrd.open_workbook('d:/7月下旬入库表.xlsx')
+# new_workbook = xlwt.Workbook()  # 使用xlwt的Workbook()方法新建工作簿
+# worksheet = new_workbook.add_sheet('new_test')  # 将新建工作簿的第一个表格命名为new_test
+# table = xlsx.sheet_by_index(0)
+# for i in range(0,table.nrows):
+#     for j in range(0,table.ncols):
+#         print(table.cell_value(i, j))
+#         worksheet.write(i, j, table.cell_value(i, j))
+# new_workbook.save('d:/test.xls')
+
+#3星答案
+import xlrd,xlsxwriter
+xlsx = xlrd.open_workbook('d:/7月下旬入库表.xlsx')
+new_workbook = xlsxwriter.Workbook('d:/test.xlsx')
+worksheet = new_workbook.add_worksheet()
+table = xlsx.sheet_by_index(0)
+for i in range(0,table.nrows):
+    for j in range(0,table.ncols):
+        print(table.cell_value(i, j))
+        worksheet.write(i, j, table.cell_value(i, j))
+new_workbook.close()
