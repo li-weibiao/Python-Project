@@ -1,0 +1,57 @@
+from xlutils.copy import copy  # 需要用pip来安装xlutils，这里导入了xlutils的copy方法
+import xlrd
+import xlwt
+
+tem_excel = xlrd.open_workbook('d:/日统计.xls', formatting_info=True)  # 使用open功能，格式信息为true
+tem_sheet = tem_excel.sheet_by_index(0)  # 找到要使用的工作表
+
+# 复制模板
+new_excel = copy(tem_excel)  # 新建工作簿，用复制tem_excel的方法来新建一个工作簿
+new_sheet = new_excel.get_sheet(0)  # 用get_sheet的方法来获得新建的工作簿的第一个表
+
+# 以下为默认样式，写入表格后不太好看
+# new_sheet.write(2, 1, 12)  # 写入数据,在第2行第1列写入数据，要注意的是，计算机是从0开始计数
+# new_sheet.write(3, 1, 18)
+# new_sheet.write(4, 1, 19)
+# new_sheet.write(5, 1, 15)
+# new_excel.save('d:/填写.xls')  # 保存
+
+# 新建样式
+style = xlwt.XFStyle()  # 初始化样式
+
+# 设置与字体相关的配置
+font = xlwt.Font()  # 初始化字体
+font.name = "微软雅黑"  # 设置字体名称
+font.bold = True  # 字体加粗
+font.height = 360  # 设置字体大小，excel里的字体大小为18，那在这里要乘以20，为360
+
+# 将设置好的字样式，放入我们新建的样式当中
+style.font = font  # 将设置好的字体配置，放入我们新建的样式当中
+
+# 设置边框
+borders = xlwt.Borders()  # 初始化边框
+# 设置边框的上下左右样式
+borders.top = xlwt.Borders.THIN  # THIN是细线框
+borders.bottom = xlwt.Borders.THIN
+borders.left = xlwt.Borders.THIN
+borders.right = xlwt.Borders.THIN
+
+# 将设置好的边框格式，放入我们新建的Excel样式当中
+style.borders = borders  # 将设置好的边框格式，放入新建的样式中
+
+# 设置对齐（上下，左右，居中对齐等）
+alignment = xlwt.Alignment()  # 初始化对齐方式
+alignment.horz = xlwt.Alignment.HORZ_CENTER  # horz,设置水平对齐方式,HORZ_CENTER为水平居中
+alignment.vert = xlwt.Alignment.VERT_CENTER  # vert，设置垂直对齐方式，VERT_CENTER为垂直居中
+
+# 将设置好的对齐方式放入新建的样式当中
+style.alignment = alignment
+
+# 按照我们设置好的样式来写入数据
+new_sheet.write(2, 1, 12, style)  # 在2行1列写入数据，style为我们设置好的格式
+new_sheet.write(3, 1, 18, style)
+new_sheet.write(4, 1, 19, style)
+new_sheet.write(5, 1, 15, style)
+
+# 保存数据，为.xls老格式，方便在任何版本的Excel中打开
+new_excel.save('d:/填写.xls')
