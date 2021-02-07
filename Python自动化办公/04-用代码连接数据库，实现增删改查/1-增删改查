@@ -1,0 +1,37 @@
+import pymysql
+database = pymysql.connect(host="192.168.0.15", user="root", passwd="123456", db="db", port=3306, charset='utf8')
+# 连接本地数据库，第一个是ip，第二个是用户名，
+# 第三个是密码，第四个是要连接的数据库，第四个是字符集
+# 格式：pymysql.connect("MySQL服务器地址", "用户名", "密码", "数据库名", charset='utf8')
+cursor = database.cursor()  # 初始化指针，以进行对数据库的查询操作
+
+# 增
+# 格式："INSERT INTO 表名 (字段1,字段2,字段3) VALUES (内容1,内容2,内容3);"
+# sql = "INSERT INTO data (date, company, province, price, weight) VALUES  ('2021-2-6', '河北粮食', '河北', '2200', '45.1');"
+# cursor.execute(sql)  # 把设置好的值（字符串）上传给mysql,执行设置好的sql语句
+# database.commit()  # 对存储的数据修改后，需要commit，否则数据不会变化
+# database.close()  # 然后关掉连接
+
+# 改
+# 格式："UPDATE 表名 SET 字段1=内容1,字段2=内容2  WHERE 条件;"
+# 条件的写法：字段 = 内容
+# sql = "UPDATE data SET date='2021-2-7' WHERE DATE='2021-2-6';"
+# cursor.execute(sql)
+# database.commit()  # 对存储的数据修改后，需要commit，否则数据不会变化
+# database.close()  # 然后关掉连接
+
+# 查
+# 基础语法："SELECT 字段 FROM 表名 WHERE 条件"
+# sql = "select company,price*weight from data where date='2021-2-7';"  # 获取乘积
+# sql = "select company,sum(weight) from data where date='2021-2-7' group by company;"  # 以company来分组,输出公司和总重量
+# cursor.execute(sql)  # 用指针来传递运行sql语句
+# result = cursor.fetchall()  # 从指针中取得全部
+# print(result)
+# database.close()
+
+# 删
+# 格式："DELETE FROM 表名 WHERE 条件;" 条件的写法 ：字段=内容
+sql = "delete from data where date='2021-2-7';"
+cursor.execute(sql)
+database.commit()  # 对存储的数据修改后，需要commit
+database.close()
