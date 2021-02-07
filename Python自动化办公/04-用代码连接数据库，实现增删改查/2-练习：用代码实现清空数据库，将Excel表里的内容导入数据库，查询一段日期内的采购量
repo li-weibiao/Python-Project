@@ -12,7 +12,7 @@ cursor.execute(sql1)
 database.commit()
 
 
-def change_date(date_excel):
+def change_date(date_excel):  # 传递日期参数
     first_date = datetime.date(1899, 12, 31).toordinal() - 1
     if isinstance(date_excel, float):  # isinstance用法:https://www.runoob.com/python/python-func-isinstance.html
         date_excel = int(date_excel)
