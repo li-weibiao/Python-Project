@@ -1,0 +1,26 @@
+# import xlwt
+#
+# workbook = xlwt.Workbook()
+# sheet0 = workbook.add_sheet('sheet0')
+# for i in range(0, 300):
+#     sheet0.write(0, i, i)
+# workbook.save('number.xls')  # 运行报错，因为用xlwt的列数不能超过256
+
+# import xlsxwriter as xw  # 列数超过256使用xlsxwriter，把xlsxwriter另作为XW，以后就能简写成XW
+#
+# workbook = xw.Workbook('number.xls')  # 打开代码所在的目录里的number.xls。
+# sheet0 = workbook.add_worksheet('sheet0')  # 工作表 = 工作簿.add_worksheet('工作表名')，这一步是新建工作表
+# for i in range(0, 300):
+#     sheet0.write(0, i, i)
+# workbook.close()  # 这里是打开本来就存在的工作簿，所以最后关闭就行了，不需要保存。
+
+# 追加写入的库openpyxl
+import openpyxl  # openpyxl虽然灵活，但使用这个也有缺点，格式比较复杂的时候可以考虑这个
+workbook = openpyxl.load_workbook('d:/统计表_模板.xlsx')  # 工作簿 = openpyxl.load_workbook('路径')，打开工作簿
+sheet0 = workbook['Sheet1']  # 打开工作表,注意'Sheet1'里的S是大写
+sheet0['B3'] = '5'  # 向单元格写入值
+sheet0['B4'] = '7'   # 这里是写入字符串
+sheet0['B5'] = 5  # 这里是写入数字
+sheet0['B6'] = 9
+workbook.save('d:/测试写数据.xlsx')
+
