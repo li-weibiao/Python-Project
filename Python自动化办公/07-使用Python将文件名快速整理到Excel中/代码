@@ -1,0 +1,12 @@
+import os
+import xlwt
+
+file_dir = 'd:/'  # 使用的目录是整个d盘
+os.listdir(file_dir)  #列出所有的文件名
+new_workbook = xlwt.Workbook()  # 新建工作簿
+worksheet = new_workbook.add_sheet('new_test')
+n = 0
+for i in os.listdir(file_dir):
+    worksheet.write(n, 0, i)
+    n += 1
+new_workbook.save('file_name.xls')
