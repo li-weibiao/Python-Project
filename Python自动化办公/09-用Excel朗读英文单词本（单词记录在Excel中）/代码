@@ -1,0 +1,45 @@
+import xlrd
+from bs4 import BeautifulSoup  # BeautifulSoup库是解析，遍历，维护“标签树”代码的功能库；名字为beautifulsoup4或bs4；
+import requests
+import time
+import xlsxwriter as wx
+import win32com.client  # pip install pypiwin32,Win32顾名思义就bai是MS的Windows应用，针对Windows平台du对Python做的扩展
+
+xlsx = xlrd.open_workbook('words.xlsx')
+table = xlsx.sheets()[0]
+dst_wb = wx.Workbook('words_trans.xlsx')
+worksheet = dst_wb.add_worksheet()
+
+for row in range(0, table.nrows):
+    time.sleep(1)
+    word = table.cell(row, 0).value
+    url = 'http://www.youdao.com/w/eng' + word  # 用爬虫来获取有道单词的解释
+
+    web_data = requests.get(url).text
+    soup = BeautifulSoup(web_data, 'lxml')  # 用BeautifulSoup来解析，需要安装lxml
+    meaning = str(soup.select('#phrsListTab > div.trans-container > ul > li')).replace('<li>', '').replace('</li>', '')  # 中文的翻译
+    translation = meaning[1:-1]  # 把翻译保存下来，记录在表格中
+    print(word)
+    worksheet.write(row, 0, word)
+    worksheet.write(row, 1, translation)
+dst_wb.close()
+
+speaker = win32com.client.Dispatch("SAPI.SpVoice")
+xlsx = xlrd.open_workbook('words_trans.xlsx')
+table = xlsx.sheets()[0]
+for row in range(0, table.nrows):
+    time.sleep(1)
+    word = table.cell(row, 0).value
+    word_segment = []
+    for i in word:  # 单词拼读
+        word_segment.append(i)
+        word_segment.append('-')
+        word_2 = ''.join(word_segment)
+
+    speaker.Speak(str(table.cell(row, 0).value))
+    speaker.Speak(str(word_2))
+    speaker.Speak(str(table.cell(row, 0).value))
+    speaker.Speak(str(table.cell(row, 0).value))
+
+
+
