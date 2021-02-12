@@ -1,0 +1,68 @@
+from docx import Document  # pip install python-docx
+from docx.enum.text import WD_PARAGRAPH_ALIGNMENT  # WD_ALIGN_PARAGRAPH在pytharm中使用不能准确的表达，因此使用“WD_PARAGRAPH_
+# ALIGNMENT”，参考：https://blog.csdn.net/SamuelChou/article/details/105349701
+from docx.shared import Pt  # 磅数
+from docx.oxml.ns import qn  # 中文格式
+# 以上是docx库中需要用到的部分
+import time  # 导入时间，因为要用到日期
+
+price = input('请输入今日价格: ')
+company_list = ['客户1', '客户2']
+#today1 = time.strftime("%Y-%m-%d", time.localtime())  # 用strftime把时间整理成年，月，日的格式
+today = time.strftime("%Y{y}%m{m}%d{d}", time.localtime()).format(y='年', m='月', d='日')  # format 格式化函数,基本语法是通过
+# {} 和 : 来代替以前的 % 。参考：https://www.runoob.com/python/att-string-format.html
+# 获取今日时间，整理成“年-月-日”的格式
+
+for i in company_list:
+    document = Document()  # 初始化文档
+    # 设置文档的基础字体，styles是样式，设为了默认；font.name是字体名
+    document.styles['Normal'].font.name = u'宋体'
+    # 设置文档的基础中文字体
+    document.styles['Normal'].element.rPr.rFonts.set(qn('w:eastAsia'), u'宋体')
+    # 初始化建立第一个自然段
+    p1 = document.add_paragraph()  # 添加一个自然段
+    # 对齐方式为居中，没有这句话默认左对齐。
+    p1.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
+    # 添加内容
+    run1 = p1.add_run('关于下达%s产品价格的通知' % (today))
+    # 设置字体样式
+    run1.font.name = '微软雅黑'
+    # 设置西文字体
+    run1.element.rPr.rFonts.set(qn('w:eastAsia'), u'宋体')
+    # 设置字体磅数
+    run1.font.size = Pt(21)
+    # 设置加粗
+    run1.font.bold = True
+    # 段后距离5磅
+    p1.space_after = Pt(5)
+    # 段前距离5磅
+    p1.space_before = Pt(5)
+
+    # 添加第二个自然段
+    p2 = document.add_paragraph()
+    # 这里是对客户的称呼
+    run2 = p2.add_run(i + ': ')
+    run2.font.name = '仿宋_GB2312'
+    run2.element.rPr.rFonts.set(qn('w:eastAsia'), u'仿宋_GB2312')
+    run2.font.size = Pt(16)
+    run2.font.bold = True
+
+    # 设置正文
+    p3 = document.add_paragraph()
+    run3 = p3.add_run('    根据公司安排，为提供优质客户服务，我单位拟定了今日黄金价格为%s元，特此通知。' % price)
+    run3.font.name = '仿宋_GB2312'
+    run3.element.rPr.rFonts.set(qn('w:eastAsia'), u'仿宋_GB2312')
+    run3.font.size = Pt(16)
+    run3.font.bold = True
+
+    # 设置末尾
+    p4 = document.add_paragraph()
+    p4.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
+    run4 = p4.add_run('（联系人：小杨    电话：xxxxxxxxxxx）')
+    run4.font.name = '仿宋_GB2312'
+    run4.element.rPr.rFonts.set(qn('w:eastAsia'), u'仿宋_GB2312')
+    run4.font.size = Pt(16)
+    run4.font.bold = True
+
+    # 以“客户名-价格通知”作为文件名保存
+    document.save('%s-价格通知.docx' % i)
