@@ -1,0 +1,15 @@
+# 新建一个word文档，在其中插入不同样式的表格，1星级表格类型多于2种；2星级代码少于等于50行，表格类型多于30种；3星级代码少于等于20行，表格类型多于50种。
+
+from docx import Document
+from docx.enum.style import WD_STYLE_TYPE
+
+document = Document()
+styles = document.styles
+
+for i in styles:
+    if i.type == WD_STYLE_TYPE.TABLE:
+        document.add_paragraph("表格样式 :  " + i.name)
+        table = document.add_table(4, 5, style=i)
+        document.add_paragraph("\n\n")
+
+document.save('所有表格样式.docx')
