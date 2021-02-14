@@ -1,0 +1,30 @@
+from docx import Document
+
+# 获取全部都是文字的文档
+# document = Document("长恨歌1.docx")  # 这里写入文件地址与名称
+# all_paragraphs = document.paragraphs  # 获得文档里的所有段落
+# for paragraph in all_paragraphs:
+#     print(paragraph.text)  # 打印每个段落的文字
+
+# 获取含有表格的docx文档
+# document = Document("长恨歌1.docx")  # 这里写入文件地址与名称
+# all_tables = document.tables  # 获取所有的表格
+# for table in all_tables:  # 获取每行每列的值
+#     for row in table.rows:
+#         for cell in row.cells:
+#             print(cell.text)  # 打印单元格内容
+
+# 读取含有文字和表格的docx文档
+import zipfile
+
+word = zipfile.ZipFile('长恨歌1.docx')  # 解压
+xml = word.read("word/document.xml").decode('utf-8')
+xml_list = xml.split('<w:t>')  # 将字符串分割成列表
+text_list = []
+for i in xml_list:
+    if i.find('</w:t>') + 1:  # 找不到会返回-1，加上1则返回0，就为false
+        text_list.append(i[:i.find('</w:t>')])  # 从0开始切片，并将切片后的内容放在列表中
+    else:
+        pass
+text = "".join(text_list)  #以空为间隔，将整个内容组合成字符串
+print(text)
