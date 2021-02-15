@@ -1,0 +1,17 @@
+import pandas as pd
+
+# 创建一维的数据组
+# a = pd.Series(['a', 'b', 'c', 'd', 'e'])
+# print(a)
+
+# 创建二维数据
+# b = pd.DataFrame({'客户名称':['张三粮配', '李四粮食'],
+#                   '车':['1', '2'],
+#                   '吨数':['40', '120'],
+#                   '总价':['80000', '240000']})
+# print(b)
+
+# 读取Excel表
+e_file = pd.ExcelFile('7月下旬入库表.xlsx')
+data = e_file.parse('7月下旬入库表')  # 整理成可用数据
+print(data)
