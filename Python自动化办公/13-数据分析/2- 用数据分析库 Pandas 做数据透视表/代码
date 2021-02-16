@@ -1,0 +1,13 @@
+import pandas as pd
+import numpy as np
+
+e_file = pd.ExcelFile('7月下旬入库表.xlsx')
+data = e_file.parse('7月下旬入库表')  # 整理数据
+#print(data)
+pt1 = pd.pivot_table(data, index=['销售商'], columns=['来源省份'], values=['入库量（吨）'], aggfunc=np.sum, margins=True)  # pivot_table是数据透视表，data是
+# 数据源，index是行,columns是列,aggfunc是求和；margins是组合，也就是总计
+pd.set_option('display.max_columns', None)  # 让数据显示全
+pt2 = pd.pivot_table(data, index=['销售商'], columns=['来源省份'], values=['入库量（吨）'], aggfunc=np.size, margins=True)  # size是计数，数一下总共有几个
+#print(pt1)
+print(pt1.iat[0, 0])  # 取0行0列的值
+print(pt2.iat[0, 0])
